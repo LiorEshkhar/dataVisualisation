@@ -1,0 +1,11 @@
+.container {
+    width: 250px;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.bar {
+    background-color: #a121a1;
+}
