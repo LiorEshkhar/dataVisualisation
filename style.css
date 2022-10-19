@@ -1,9 +1,32 @@
-.container {
-    width: 250px;
-    height: 200px;
-    border: 1px solid #32c1ff;
+* {
+    font-family: sans-serif;
 }
 
-.bar {
-    fill: #32c1ff;
+ul {
+    list-style: none;
+    margin: 3rem auto;
+    padding: 1rem;
+}
+
+li {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin: 1rem 0;
+    padding: 0.5rem;
+}
+
+.added {
+    background-color: greenyellow;
+}
+
+.redundant {
+    background-color: lightcoral;
+}
+
+.updated {
+    background-color: orange;
+}
+
+div {
+    display: flex;
+    justify-content: space-around;
 }

@@ -1,37 +1,85 @@
-const DUMMY_DATA = [
-    { id: 'd1', value: 1, region: 'USA' },
-    { id: 'd2', value: 11, region: 'ISRAEL' },
-    { id: 'd3', value: 7, region: 'CYPRUS' },
-    { id: 'd4', value: 8, region: 'GERMANY' }
-];
+const countryData = {
+    items: ['China', 'India', 'USA'],
+    addItem(item) {
+        this.items.push(item);
+    },
+    removeItem(index) {
+        this.items.splice(index, 1);
+    },
+    updateItem(index, newItem) {
+        this.items[index] = newItem;
+    }
+};
 
-const xScale = d3.scaleBand()  // uniform scaling
-    // setting the different country names as the domain
-    .domain(DUMMY_DATA.map(dataPoint => dataPoint.region)) 
-    .rangeRound([0, 250])   // setting the possible range of values
-    .padding(0.2);
-const yScale = d3.scaleLinear() // scale linearaly to some values
-                .domain([0, 15]) // set the domain in some units
-                .range([0, 200]); // set the corresponding domain in pixels
-
-const container = d3.select('svg')
-    .classed('container', true)
-
-const bars = container
-    .selectAll('.bar')    // Selecting all the bar elements
-    .data(DUMMY_DATA)     // Bind data
-    .enter()              // Find what data was not rendered yet
-    .append('rect')        // Add a div for every non rendered data point
-    .classed('bar', true) // Define all the created divs to .bar, matching the selection
-    .attr('width', xScale.bandwidth()) // set the width to be the same for all
-    .attr('height', (data) => yScale(data.value))  // set the height to depend on value
-    // the location of each country was defined in xScale (as region was the domain )
-    .attr('x', data => xScale(data.region))
-    .attr('y', data => 200 - yScale(data.value));
+d3.select('ul')
+    .selectAll('li')    // select all li, even if they do not exist yet
+    .data(countryData.items)
+    .enter()       // returns all missing items
+    .append('li')
+    .text(data => data); // write each data into its corresponding li
 
 setTimeout(() => {
-    // Render the bars again only with the first 2 data pieces
-    bars.data(DUMMY_DATA.slice(0, 2))  
-    .exit()    // Returns the elements that were rendered, but whose data was removed
-    .remove()
-}, 3000);
+    countryData.addItem("Germany");
+    d3.select('ul')
+        .selectAll('li')
+        .data(countryData.items)
+        .enter()       // returns all missing items
+        .append('li')
+        .classed('added', true)
+        .text(data => data); // write each data into its corresponding li
+}, 2000);
+
+setTimeout(() => { // diagram below
+    countryData.removeItem(0);
+    d3.select('ul')
+        .selectAll('li')
+        .data(countryData.items, data => data)
+        // Return all redundant items - items that were rendered, 
+        // but whose index - here name - is not part of the data anymore
+        .exit()         
+        .classed('redundant', true)
+}, 4000);
+
+setTimeout(() => { // diagram below
+    countryData.updateItem(1, 'Russia');
+    // remove
+    d3.select('ul')
+        .selectAll('li')
+        .data(countryData.items, data => data)
+        // Return all redundant items - items that were rendered, 
+        // but whose index - here name - is not part of the data anymore
+        .exit() 
+        .remove()
+        
+    d3.select('ul')
+        .selectAll('li')
+        .data(countryData.items, data => data)
+        .enter()
+        .append('li')
+        .text(data => data)
+        .classed('updated', true)
+}, 6000);
+
+
+/* 
+There are 4 li, who are linked to 4 pieces of data. 
+Automatically they are linked to the index of the pieces of data:
+li -> 0
+li -> 1
+li -> 2
+li -> 3
+
+When data is removed with the index identified as the name, 
+the names are now chosen to identify the different li:
+li -> China
+li -> India
+li -> USA 
+li -> Germany
+
+This is compared against the data:
+India, USA, Germany
+
+Through which China will be marked as redundant.
+*/
+
+
