@@ -1,11 +1,9 @@
 .container {
     width: 250px;
     height: 200px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
+    border: 1px solid #32c1ff;
 }
 
 .bar {
-    background-color: #a121a1;
+    fill: #32c1ff;
 }
