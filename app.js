@@ -38,7 +38,7 @@ function renderChart() {
     // Determine color according to value
     let color = d3.scaleSequential()
         .domain([0, d3.max(selectedData, d => d.value)])
-        .interpolator(d3.interpolateBlues);
+        .interpolator(d3.interpolateRgb("#D9F9A5", "#1B98E0"));
 
     // Axis
     chart.select('#labels')
