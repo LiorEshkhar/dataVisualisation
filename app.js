@@ -15,9 +15,9 @@ let selectedData = DUMMY_DATA;
 
 // select the svg and set its size
 const chartContainer = d3
-.select('svg')
-.attr('width', CHART_WIDTH)
-.attr('height', CHART_HEIGHT + MARGINS.top + MARGINS.bottom);
+    .select('svg')
+    .attr('width', CHART_WIDTH)
+    .attr('height', CHART_HEIGHT + MARGINS.top + MARGINS.bottom);
 
 // Functions to set width and height
 const x = d3.scaleBand()          // scale uniformly
@@ -34,6 +34,11 @@ function renderChart() {
     x.domain(selectedData.map(d => d.region));
     // set the domain to be a bit more than the full range of value
     y.domain([0, d3.max(selectedData, d => d.value) + 3]);
+
+    // Determine color according to value
+    let color = d3.scaleSequential()
+        .domain([0, d3.max(selectedData, d => d.value)])
+        .interpolator(d3.interpolateBlues);
 
     // Axis
     chart.select('#labels')
@@ -64,10 +69,10 @@ function renderChart() {
         .attr('width', x.bandwidth())   // set the rects to be of uniform width
         .attr('x', data => x(data.region))      // set the x coordinate
         .attr('y', data => y(data.value))       // set the y coordinate
+        .attr('fill', data => color(data.value))
         .transition().duration(600)             // add an animation
         //linearly set the height
-        .attr('height', data => CHART_HEIGHT - y(data.value))
-        ; 
+        .attr('height', data => CHART_HEIGHT - y(data.value));
 
     // Add the labels
     chart.selectAll('.label')       // Select all labels (none yet)
