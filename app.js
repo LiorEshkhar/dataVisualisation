@@ -83,10 +83,15 @@ function renderChart() {
         .text(data => data.value)   // set the text to be the value of each one
         // set them to be in the middle of each bar
         .attr('x', data => x(data.region) + x.bandwidth() / 2)
-        .attr('y', data => y(data.value) - CHART_HEIGHT * 0.05) // set them to be above each bar
+        .attr('y', CHART_HEIGHT - CHART_HEIGHT * 0.1)
         .attr('text-anchor', 'middle') // the position of text will be decided by its middle
         .classed('label', true)        // add them to class label
-}
+        .attr('opacity', -5)            // labels initially invisible (negative so that they appear later)
+        .attr('fill', data => color(data.value))
+        .transition().duration(800)
+        .attr('y', data => y(data.value) - CHART_HEIGHT * 0.05) // set them to be above each bar
+        .attr('opacity', 1);           // turn labels to visible 
+    }
 
 renderChart();
 
