@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,14 +10,30 @@
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
     <script type="module" defer>
 
-        import {scaleLinear} from "https://cdn.skypack.dev/d3-scale@4";
-        
+        import { scaleLinear } from "https://cdn.skypack.dev/d3-scale@4";
+
         const x = scaleLinear();
-        
-        </script>
+
+    </script>
+    <script type="module" defer>
+
+        import { axisLeft } from "https://cdn.skypack.dev/d3-axis@3";
+
+        const axis = axisLeft(scale);
+
+    </script>
     <script src="app.js" defer></script>
 </head>
+
 <body>
-    <svg></svg>
+    <div id="app">
+        <div id="chart">
+            <svg></svg>
+        </div>
+        <div id="data">
+            <ul></ul>
+        </div>
+    </div>
 </body>
+
 </html>

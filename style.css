@@ -1,9 +1,43 @@
-.container {
-    width: 250px;
-    height: 200px;
-    border: 1px solid #32c1ff;
+html {
+    font-family: sans-serif;
+}
+
+#app {
+    display: flex;
+    margin: 2rem 1rem;
+}
+
+#chart {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    padding: 1rem;
+}
+
+#chart, #data {
+    margin: 0 2rem;
+}
+
+#data ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#data li {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
 }
 
 .bar {
-    fill: #32c1ff;
+    fill: #3facff;
+}
+
+.label {
+    fill: #3facff;
+    font-size: 1.2em;
 }
