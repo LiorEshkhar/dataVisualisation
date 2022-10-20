@@ -68,10 +68,11 @@ function renderChart() {
         .classed('bar', true)   // set these rects to be of class bar
         .attr('width', x.bandwidth())   // set the rects to be of uniform width
         .attr('x', data => x(data.region))      // set the x coordinate
-        .attr('y', data => y(data.value))       // set the y coordinate
+        .attr('y', CHART_HEIGHT)
         .attr('fill', data => color(data.value))
         .transition().duration(600)             // add an animation
         //linearly set the height
+        .attr('y', data => y(data.value))       // set the y coordinate
         .attr('height', data => CHART_HEIGHT - y(data.value));
 
     // Add the labels
