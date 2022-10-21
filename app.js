@@ -42,6 +42,7 @@ function renderChart() {
 
     // Axis
     chart.select('#axis')
+        .transition()
         // Add an axis according to the information stored in x (domain, location)
         .call(d3.axisBottom(x).tickSizeOuter(0)) // bottom - labels are below the axis
         .attr('color', '#666666')
