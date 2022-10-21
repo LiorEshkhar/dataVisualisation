@@ -35,51 +35,55 @@ function renderChart() {
     // set the domain to be a bit more than the full range of value
     y.domain([0, d3.max(selectedData, d => d.value) + 3]);
 
-    // Determine color according to value
+    // Determine color according to value (defining a function here)
     let color = d3.scaleSequential()
         .domain([0, d3.max(selectedData, d => d.value)])
         .interpolator(d3.interpolateRgb("#D9F9A5", "#1B98E0"));
 
     // Axis
-    chart.select('#labels')
+    chart.select('#axis')
         // Add an axis according to the information stored in x (domain, location)
         .call(d3.axisBottom(x).tickSizeOuter(0)) // bottom - labels are below the axis
         .attr('color', '#666666')
         // move the axis 0 in the x direction and height in the y direction
         .attr('transform', `translate(0, ${CHART_HEIGHT})`);
 
-    // Reset the bars
-    chart.selectAll('.bar')     // select all bars
-        .data([])               // Bind to an empty array
-        .exit()                 // select all dedundant - all, since the array is emtpy
-        .remove();
-
-    // Reset the lables
-    chart.selectAll('.label')
-        .data([])
-        .exit()
-        .remove()
-
-    // Add the bars
+    // Update the bars
     chart.selectAll('.bar')     // select all elements of class .bar (none yet)
         .data(selectedData, data => data.id)       // bind the data
-        .enter()                // select the missing elements
-        .append('rect')         // create a rect for each missing element
-        .classed('bar', true)   // set these rects to be of class bar
-        .attr('width', x.bandwidth())   // set the rects to be of uniform width
-        .attr('x', data => x(data.region))      // set the x coordinate
-        .attr('y', CHART_HEIGHT)
-        .attr('fill', data => color(data.value))
-        .transition().duration(600)             // add an animation
-        //linearly set the height
-        .attr('y', data => y(data.value))       // set the y coordinate
-        .attr('height', data => CHART_HEIGHT - y(data.value));
+        .join(enter => enter
+            .append('rect')
+            .classed('bar', true)   // set these rects to be of class bar
+            .attr('width', x.bandwidth())   // set the rects to be of uniform width
+            .attr('height', 0)
+            .attr('y', CHART_HEIGHT)
+            .attr('x', data => x(data.region))      // set the x coordinate
+            .transition().duration(600)             // add an animation
+            //linearly set the height
+            .attr('y', data => y(data.value))       // set the y coordinate
+            .attr('height', data => CHART_HEIGHT - y(data.value)),
 
-    // Add the labels
+            update => update
+            .transition().duration(600)             // add an animation
+            .attr('x', data => x(data.region))      // set the x coordinate
+            .attr('width', x.bandwidth()),   // set the rects to be of uniform width
+
+            exit => exit
+            .transition().duration(300)
+            //linearly set the height
+            .attr('y', CHART_HEIGHT)
+            .attr('width', 0)
+            .attr('transform', `translate(${x.bandwidth()/2}, 0)`)
+            .attr('height', 0)
+            .remove()
+            )
+        .attr('fill', data => color(data.value))
+
+
+    // Update the labels
     chart.selectAll('.label')       // Select all labels (none yet)
         .data(selectedData, data => data.id)           // bind the data
-        .enter()                    // select the missing elements
-        .append('text')             // append the text element, not the word text
+        .join('text')             // remove and append the needed labels
         .text(data => data.value)   // set the text to be the value of each one
         // set them to be in the middle of each bar
         .attr('x', data => x(data.region) + x.bandwidth() / 2)
@@ -91,7 +95,7 @@ function renderChart() {
         .transition().duration(800)
         .attr('y', data => y(data.value) - CHART_HEIGHT * 0.05) // set them to be above each bar
         .attr('opacity', 1);           // turn labels to visible 
-    }
+}
 
 renderChart();
 
