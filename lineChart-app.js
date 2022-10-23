@@ -33,7 +33,7 @@ function convToArray(sample) {
 // async/await because the rest can only run once the data is rendered
 // fetch is asynchon by default, meaning the rest of the code dods not wait for it to finish
 async function renderData() {
-    const resp = await fetch('./data.csv');
+    const resp = await fetch('./lineChart-data.csv');
     sample = await resp.text();
     // csv.toArrays converts each line to an array
     // slice(1) removes the headers
