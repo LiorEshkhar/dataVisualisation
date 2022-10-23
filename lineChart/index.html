@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Data Visualisation</title>
+
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script type="module" defer>
+
+        import { scaleLinear } from "https://cdn.skypack.dev/d3-scale@4";
+
+        const x = scaleLinear();
+
+    </script>
+    <script type="module" defer>
+        import { axisLeft } from "https://cdn.skypack.dev/d3-axis@3";
+    </script>
+    <script src="../res/d3-delection-multi.js" defer></script>
+    <script src="../res/jquery.js" defer></script>
+    <script src="../res/jquerycsv.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <button class="button-19" id="previousBtn" role="button" onclick="previous()"><</button>
+    <div id="chart1"></div>
+    <button class="button-19" id="nextBtn" role="button" onclick="next()">></button>
+</body>
+
+</html>
