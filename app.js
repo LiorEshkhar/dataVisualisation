@@ -53,12 +53,15 @@ async function renderData() {
     // create the x axis
     let axisX = svg.append('g')
         .attr('transform', `translate(0, ${dim.height - dim.margin})`)
-        .attr('color', '#2b2d42');   
+        .attr('color', '#2b2d42');
+
+
 
     // function to generate y axis
     let scaleY = d3.scaleLinear()
         .nice()
-        .range([dim.height - dim.margin, dim.margin]);
+        // +2 due to compensate for the width of the x axis and align the axes
+        .range([dim.height - dim.margin + 2, dim.margin]);
 
     // create the y axis
     let axisY = svg.append('g')
@@ -135,12 +138,10 @@ async function renderData() {
                 .tickSize(10)
                 .tickSizeOuter(0)
                 .ticks(8))
-            .selectAll('text')
-            .attrs({
-                'font-size': '1rem',
-                'text-anchor': 'left',
-                'transform': `translate(0, ${dim.margin / 3}) rotate(-45)`
-            })
+            .selectAll('text');
+
+        // style the x axis
+        styleAxis(axisX);
 
         // update the domain of the generator for the y axis
         scaleY
@@ -151,8 +152,9 @@ async function renderData() {
             .call(d3.axisLeft(scaleY)
                 .ticks(5)
                 .tickSizeOuter(0))
-            .selectAll('text')
-            .attr('font-size', '1rem');
+
+        // style the y axis
+        styleAxis(axisY);
 
         // update the graph
         g.selectAll('path')
@@ -160,7 +162,7 @@ async function renderData() {
             // and the graph is drawn once, otherwise the graph would be drawn once
             // for each element in the array
             .data([data], d => d[0].date)
-            
+
             // draw the new path
             .join(enter => enter
                 .append('path')
@@ -170,14 +172,38 @@ async function renderData() {
                     'stroke-width': '2px',
                     'd': line(data)         // generator
                 }),
-                
+
                 update => update,
-                
+
                 // remove the old path
                 exit => exit
                     .transition().duration(1000)
                     .attr('d', line(data))
                     .remove())
+    }
+
+    // style the axes
+    function styleAxis(axis) {
+        // the line
+        axis.selectAll('.domain')
+            .attrs({
+                'stroke': '#E04836',
+                'stroke-width': 6
+            });
+        // the labels
+        axis.selectAll('text')
+            .attrs({
+                'font-size': '1rem',
+                'color': '#381501'
+            })
+
+        // the ticks
+        axis.selectAll('line')
+            .attrs({
+                'stroke': '#E04836',
+                'stroke-width': 3,
+                'opacity': .8
+            });
     }
 })();
 
