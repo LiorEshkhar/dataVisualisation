@@ -24,7 +24,7 @@ const x = d3.scaleBand()          // scale uniformly
     .rangeRound([0, CHART_WIDTH]) // set the range and round the values 
     .padding(0.1);                // set the padding to 10%
 const y = d3.scaleLinear()        // scale linearly to the values
-    .range([CHART_HEIGHT, 0]);        // set the range and keep the exact values
+    .range([CHART_HEIGHT, 0]);    // set the range and keep the exact values
 
 const chart = chartContainer.select('g'); // a svg element used to group elements
 
