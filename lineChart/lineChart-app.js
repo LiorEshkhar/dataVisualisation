@@ -137,8 +137,7 @@ async function renderData() {
                 .tickFormat(d3.timeFormat("%m-%Y"))
                 .tickSize(10)
                 .tickSizeOuter(0)
-                .ticks(8))
-            .selectAll('text');
+                .ticks(8));
 
         // style the x axis
         styleAxis(axisX);
@@ -151,7 +150,7 @@ async function renderData() {
         axisY.transition(t)
             .call(d3.axisLeft(scaleY)
                 .ticks(5)
-                .tickSizeOuter(0))
+                .tickSizeOuter(0));
 
         // style the y axis
         styleAxis(axisY);
