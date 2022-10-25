@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./groupedStacked-style.css">
+
+    <title>Grouped - Stacked</title>
+
+    <script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script type="module" defer>
+
+        import { scaleLinear } from "https://cdn.skypack.dev/d3-scale@4";
+
+        const x = scaleLinear();
+
+    </script>
+    <script type="module" defer>
+        import { axisLeft } from "https://cdn.skypack.dev/d3-axis@3";
+    </script>
+    <script src="../res/d3-delection-multi.js" defer></script>
+    <script src="../res/jquery.js" defer></script>
+    <script src="../res/jquerycsv.js" defer></script>
+    <script src="./groupedStacked-app.js" defer></script>
+</head>
+
+<body>
+    <div id="btnContainer">
+        <button class="button-19" id="groupedBtn" role="button" onclick="layout('grouped')">Grouped</button>
+        <button class="button-19" id="stackedBtn" role="button" onclick="layout('stacked')">Stacked</button>
+    </div>
+    <div id="chart1"></div>
+</body>
+
+</html>
